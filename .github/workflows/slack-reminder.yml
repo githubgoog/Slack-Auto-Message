@@ -1,0 +1,20 @@
+name: Weekly Slack Reminder
+
+on:
+  schedule:
+    - cron: '0 15 * * 2,5'  # Every Tuesday and Friday at 10 AM EST (15:00 UTC)
+  workflow_dispatch:  # Allows manual testing
+
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Slack Message
+        run: |
+          curl -X POST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "channel": "C07QR8RUGJE",
+              "text": "Good morning founders! Today we have a huddle at 1:00pm!!!"
+            }'
